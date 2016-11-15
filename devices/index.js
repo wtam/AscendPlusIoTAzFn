@@ -11,7 +11,11 @@ function processRequest(context, req) {
     var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};SharedAccessKeyName=iothubowner;SharedAccessKey=${process.env.IOTHUBOWNER_SHAREDACCESSKEY}`
     var registry = iothub.Registry.fromConnectionString(connectionString)
    
-    var device = new iothub.device(null)
+    // var device = new iothub.device(null) //remove this code as its seems the new npm package keep complain that .device is not constructor
+    // replace wiht the following 
+    var device = {
+        deviceId: null
+    };
 
     device.deviceId = req.body.deviceId
 
