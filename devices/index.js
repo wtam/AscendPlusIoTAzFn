@@ -1,4 +1,4 @@
-module.exports = function processRequest(context, req) {
+function processRequest(context, req) {
         /*var printDeviceInfo = function(err, deviceInfo, res) {
         if (deviceInfo) {
             console.log('Device id: ' + deviceInfo.deviceID);
@@ -11,7 +11,7 @@ module.exports = function processRequest(context, req) {
     var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};SharedAccessKeyName=iothubowner;SharedAccessKey=${process.env.IOTHUBOWNER_SHAREDACCESSKEY}`
     var registry = iothub.Registry.fromConnectionString(connectionString)
    
-    var device = new iothub.Device(null)
+    var device = new iothub.device(null)
 
     device.deviceId = req.body.deviceId
 
