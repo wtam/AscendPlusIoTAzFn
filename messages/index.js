@@ -1,4 +1,4 @@
-function processRequest(context, req) {
+module.exports = function processRequest(context, req) {
     context.log('Node.js HTTP trigger function processed a request. DeviceID=%s DeviceKey=%s',req.body.deviceId, req.body.deviceKey);
 
     ///var clientFromConnectionString = require('azure-iot-device-amqp').clientFromConnectionString;

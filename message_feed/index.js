@@ -1,4 +1,4 @@
-function processRequest(context, req) {
+module.exports = function processRequest(context, req) {
     var EventHubClient = require('azure-event-hubs').Client;
 
     var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};SharedAccessKeyName=iothubowner;SharedAccessKey=${process.env.IOTHUBOWNER_SHAREDACCESSKEY}`

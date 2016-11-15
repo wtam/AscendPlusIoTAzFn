@@ -1,4 +1,4 @@
-function processRequest(context, req) {
+module.exports = function processRequest(context, req) {
         /*var printDeviceInfo = function(err, deviceInfo, res) {
         if (deviceInfo) {
             console.log('Device id: ' + deviceInfo.deviceID);
@@ -7,8 +7,8 @@ function processRequest(context, req) {
     }*/
 
     var iothub = require ('azure-iothub')
-    var connectionString = 'HostName=TofugearIoTHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=i0dmaUYa2WGiR6Kh76KwWP2633KCpFKejTUUNfXWuxM=';
-    //var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};SharedAccessKeyName=iothubowner;SharedAccessKey=${process.env.IOTHUBOWNER_SHAREDACCESSKEY}`
+    //var connectionString = 'HostName=TofugearIoTHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=i0dmaUYa2WGiR6Kh76KwWP2633KCpFKejTUUNfXWuxM=';
+    var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};SharedAccessKeyName=iothubowner;SharedAccessKey=${process.env.IOTHUBOWNER_SHAREDACCESSKEY}`
     var registry = iothub.Registry.fromConnectionString(connectionString)
    
     var device = new iothub.Device(null)
