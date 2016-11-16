@@ -7,7 +7,8 @@ function processRequest(context, req) {
     var Message = require('azure-iot-device').Message;
 
     var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};DeviceId=${req.body.deviceId};SharedAccessKey=${req.body.deviceKey}`  
-  
+
+    context.log('Client connecting.....');
     var client = clientFromConnectionString(connectionString);
     var messageSent = false;
 
@@ -18,7 +19,8 @@ function processRequest(context, req) {
         context.log('Client connected');
 
         // Create a message and send it to the IoT Hub
-        var msg = new Message(JSON.stringify({ deviceId: req.body.deviceId, Data: req.body.deviceMessage}));
+        var msg = new Message(JSON.stringify({ deviceId: req.body.deviceId, Data: req.body.deviceMessage }));
+        context.log('Message sending.....');
         client.sendEvent(msg, function (err) {
           if (err) {
             console.log(err.toString());
