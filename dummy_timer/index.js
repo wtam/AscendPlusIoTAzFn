@@ -12,7 +12,7 @@ module.exports = function (context, myTimer) {
     {
         context.log('Node.js is running late!');     
     } else {
-        pingPaths.map((path)=> {
+        pingPaths.map(function (path)  {
             var url = `https://${process.env.AF_HOST}${path}`
             context.log(`ping url: ${url}`)
             var req = https.get(url)
