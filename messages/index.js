@@ -1,10 +1,14 @@
 function processRequest(context, req) {
     context.log('Node.js HTTP trigger function processed a request. DeviceID=%s DeviceKey=%s',req.body.deviceId, req.body.deviceKey);
 
+    context.log('azure-iot-device-http pkg loading.......');
     ///var clientFromConnectionString = require('azure-iot-device-amqp').clientFromConnectionString;
     var clientFromConnectionString = require('azure-iot-device-http').clientFromConnectionString;
+    context.log('azure-iot-device-http pkg loaded');
 
+    context.log('azure-iot-device pkg loading.......');
     var Message = require('azure-iot-device').Message;
+    context.log('azure-iot-device pkg loaded');
 
     var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};DeviceId=${req.body.deviceId};SharedAccessKey=${req.body.deviceKey}`  
 

@@ -6,8 +6,10 @@ function processRequest(context, req) {
             console.log('Device key: ' + deviceInfo.authentication.SymmetricKey.primaryKey);
         }
     }*/
+    context.log('azure-iothub pkg loading.......');
+    var iothub = require('azure-iothub')
+    context.log('azure-iothub pkg loaded');
 
-    var iothub = require ('azure-iothub')
     //var connectionString = 'HostName=TofugearIoTHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=i0dmaUYa2WGiR6Kh76KwWP2633KCpFKejTUUNfXWuxM=';
     var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};SharedAccessKeyName=iothubowner;SharedAccessKey=${process.env.IOTHUBOWNER_SHAREDACCESSKEY}`
 
