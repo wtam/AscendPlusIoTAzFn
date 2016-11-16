@@ -9,6 +9,7 @@ function processRequest(context, req) {
     var iothub = require ('azure-iothub')
     //var connectionString = 'HostName=TofugearIoTHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=i0dmaUYa2WGiR6Kh76KwWP2633KCpFKejTUUNfXWuxM=';
     var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};SharedAccessKeyName=iothubowner;SharedAccessKey=${process.env.IOTHUBOWNER_SHAREDACCESSKEY}`
+
     var registry = iothub.Registry.fromConnectionString(connectionString)
    
     // var device = new iothub.device(null) //remove this code as its seems the new npm package keep complain that .device is not constructor
