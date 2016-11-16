@@ -1,4 +1,6 @@
 function processRequest(context, req) {
+    context.log('Node.js HTTP trigger function processed a request. StartAfterOffset=%s', req.query.after_offset);
+
     var EventHubClient = require('azure-event-hubs').Client;
 
     var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};SharedAccessKeyName=iothubowner;SharedAccessKey=${process.env.IOTHUBOWNER_SHAREDACCESSKEY}`
@@ -30,13 +32,16 @@ function processRequest(context, req) {
         return true;
     }
 
+    context.log('Connecting to IoTHub.....');
     var client = EventHubClient.fromConnectionString(connectionString);
+    context.log('IotHub connected');
 
     var closeClientAndCompleteContext = function() {
         client.close();
         context.done();
     }
 
+    context.log('Retirving Data from queue.....');
     client.open()
         .then(client.getPartitionIds.bind(client))
         .then(function (partitionIds) {

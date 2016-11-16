@@ -8,7 +8,7 @@ function processRequest(context, req) {
 
     var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};DeviceId=${req.body.deviceId};SharedAccessKey=${req.body.deviceKey}`  
 
-    context.log('Client connecting.....');
+    context.log('Connecting to IoTHub.....');
     var client = clientFromConnectionString(connectionString);
     var messageSent = false;
 
@@ -16,7 +16,7 @@ function processRequest(context, req) {
       if (err) {
         context.log('Could not connect: ' + err);
       } else {
-        context.log('Client connected');
+        context.log('IotHub connected');
 
         // Create a message and send it to the IoT Hub
         var msg = new Message(JSON.stringify({ deviceId: req.body.deviceId, Data: req.body.deviceMessage }));

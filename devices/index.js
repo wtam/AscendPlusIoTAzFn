@@ -1,4 +1,5 @@
 function processRequest(context, req) {
+    context.log('Node.js HTTP trigger function processed a request DeviceID=%s', req.body.deviceId);
         /*var printDeviceInfo = function(err, deviceInfo, res) {
         if (deviceInfo) {
             console.log('Device id: ' + deviceInfo.deviceID);
@@ -10,8 +11,9 @@ function processRequest(context, req) {
     //var connectionString = 'HostName=TofugearIoTHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=i0dmaUYa2WGiR6Kh76KwWP2633KCpFKejTUUNfXWuxM=';
     var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};SharedAccessKeyName=iothubowner;SharedAccessKey=${process.env.IOTHUBOWNER_SHAREDACCESSKEY}`
 
+    context.log('Connecting to IoTHub.....');
     var registry = iothub.Registry.fromConnectionString(connectionString)
-   
+    context.log('IoTHub connected......');
     // var device = new iothub.device(null) //remove this code as its seems the new npm package keep complain that .device is not constructor
     // replace wiht the following 
     var device = {
@@ -19,7 +21,7 @@ function processRequest(context, req) {
     };
 
     device.deviceId = req.body.deviceId
-
+    context.log('Device registering......');
     registry.create(device, function(err, deviceInfo, res) {
         if (err) {
             registry.get(device.deviceId, function(err, deviceInfo, res) { 
@@ -36,8 +38,9 @@ function processRequest(context, req) {
         } else if (deviceInfo) {
             context.res = {
                 status: 201,
-                body: JSON.stringify({"deviceInfo": deviceInfo})
+                body: JSON.stringify({ "deviceInfo": deviceInfo })
             }
+            context.log('Device registered......');
             context.done();
         }
     })
