@@ -36,20 +36,19 @@ function processRequest(context, req) {
         return true;
     }
 
-    context.log('Connecting to IoTHub.....');
+    context.log('Before registry to IoTHub.....');
     var client = EventHubClient.fromConnectionString(connectionString);
-    context.log('IotHub connected');
+    context.log('Connecting to IoTHub.....');
 
     var closeClientAndCompleteContext = function() {
         client.close();
         context.done();
     }
 
-    context.log('Retirving Data from queue.....');
     client.open()
         .then(client.getPartitionIds.bind(client))
         .then(function (partitionIds) {
-
+            context.log('Connected to IoTHub.....');
             setTimeout(function() {
                         context.res = {
                             status: 201,
@@ -61,6 +60,7 @@ function processRequest(context, req) {
                     }, 5000)
                     
             return partitionIds.map(function (partitionId) {
+                context.log('Retirving Data from queue.....');
                 return client.createReceiver(process.env.MESSAGE_POLL_CONSUMERGROUP, partitionId, { 'startAfterOffset': (req.query.after_offset || 0) }).then(function(receiver) {
                     context.log(`connected. PartitionId: ${partitionId}`)                
                     receiver.on('errorReceived', printError);

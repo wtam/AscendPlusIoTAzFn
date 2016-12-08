@@ -16,8 +16,10 @@ function processRequest(context, req) {
 
     var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};DeviceId=${req.body.deviceId};SharedAccessKey=${req.body.deviceKey}`  
 
-    context.log('Connecting to IoTHub.....');
+    context.log('Before registry to IoTHub.....');
     var client = clientFromConnectionString(connectionString);
+    context.log('Connecting to IoTHub.....');
+
     var messageSent = false;
 
     var connectCallback = function (err) {
