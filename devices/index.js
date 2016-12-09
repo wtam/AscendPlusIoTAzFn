@@ -2,24 +2,14 @@ var iothub = require('azure-iothub')
 
 function processRequest(context, req) {
     context.log('Node.js HTTP trigger function processed a request DeviceID=%s', req.body.deviceId);
-        /*var printDeviceInfo = function(err, deviceInfo, res) {
-        if (deviceInfo) {
-            console.log('Device id: ' + deviceInfo.deviceID);
-            console.log('Device key: ' + deviceInfo.authentication.SymmetricKey.primaryKey);
-        }
-    }*/
-    //context.log('azure-iothub pkg loading.......');
-    //var iothub = require('azure-iothub')
-    //context.log('azure-iothub pkg loaded');
-
-    //var connectionString = 'HostName=TofugearIoTHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=i0dmaUYa2WGiR6Kh76KwWP2633KCpFKejTUUNfXWuxM=';
+        
     var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};SharedAccessKeyName=iothubowner;SharedAccessKey=${process.env.IOTHUBOWNER_SHAREDACCESSKEY}`
 
     context.log('Before registry to IoTHub.....');
     var registry = iothub.Registry.fromConnectionString(connectionString)
     context.log('Connecting to IoTHub.....');
     // var device = new iothub.device(null) //remove this code as its seems the new npm package keep complain that .device is not constructor
-    // replace wiht the following 
+    // replace with the following 
     var device = {
         deviceId: null
     };
