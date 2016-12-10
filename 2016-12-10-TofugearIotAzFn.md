@@ -15,7 +15,9 @@ language: English
 verticals: “Retail, Consumer Products & Services”
 ---
 
-**Customer profile**
+Customer profile
+----------------
+
 Company: Tofugear
 -----------------
 URL : <http://www.tofugear.com/> 
@@ -39,9 +41,9 @@ This is the team that was involved with the project:
 -   William Dam – Microsoft, Technical Evangelist
 -   William Yeung – Tofugear Chief Architect
 
-**Problem statement**
+Problem statement
 
-Scenario
+**Scenario**
 --------
 Currently **Tofugear Omnitech** solution will collect both end customer
 analytic and transactional information from mobiles (Android, iOS) and
@@ -70,9 +72,9 @@ IoT hub instead of the PostgreSQL.
 
 ![Whiteboard Architecture]({{ site.baseurl }}/images/TofugearImages/Tofugear-WhiteBoard.jpg)
 
-**Solutions, steps and delivery**
+Solutions, steps and delivery
 
-Data Ingestion
+**Data Ingestion**
 --------------
 
 To unify all web and Mobile client connection to IoT hub, we decide to
@@ -119,7 +121,7 @@ postmaster minic the input with 1 use case
 
 ![Azure Function - IoTHub webClient message Proxy partial sample code]({{ site.baseurl }}/images/TofugearImages/Tofugear-AzFnMessageProxy.JPG)
 
-Data Processing
+**Data Processing**
 ---------------
 
 We then connect these Azure Functions to IoTHub with Stream Analytic and
@@ -181,71 +183,13 @@ SystemTracker:iothub-ns-tofugeario-73126-2c3dc3dc23:eventhub:tofugeariothub\~245
 Timestamp:11/1/2016 4:26:55 AM
 TrackingId:c72526651ba4472dbb3bdb9a7fc3821a\_G0, SystemTracker:gateway2,
 Timestamp:11/1/2016 4:26:55 AM
-
-2016-11-01T04:26:55.136 The supplied offset '336' is invalid. The last
-offset in the system is '-1'
-TrackingId:ca247848-0a62-47cf-a90b-981441133ea1\_B2,
-SystemTracker:iothub-ns-tofugeario-73126-2c3dc3dc23:eventhub:tofugeariothub\~32766,
-Timestamp:11/1/2016 4:26:55 AM
-Reference:fe7f4793-c742-4930-b01f-7b9ca2112b9b,
-TrackingId:51a95b09-e411-4281-a1e3-84a17fd024d9\_B2,
-SystemTracker:iothub-ns-tofugeario-73126-2c3dc3dc23:eventhub:tofugeariothub\~32766|streamanalytic,
-Timestamp:11/1/2016 4:26:55 AM
-TrackingId:c72526651ba4472dbb3bdb9a7fc3821a\_G0, SystemTracker:gateway2,
-Timestamp:11/1/2016 4:26:55 AM
-
-2016-11-01T04:26:56.529 The supplied offset '336' is invalid. The last
-offset in the system is '-1'
-TrackingId:ca247848-0a62-47cf-a90b-981441133ea1\_B2,
-SystemTracker:iothub-ns-tofugeario-73126-2c3dc3dc23:eventhub:tofugeariothub\~32766,
-Timestamp:11/1/2016 4:26:56 AM
-Reference:c51e6f4a-d368-481f-bf5f-b4d9bfab5dc2,
-TrackingId:51a95b09-e411-4281-a1e3-84a17fd024d9\_B2,
-SystemTracker:iothub-ns-tofugeario-73126-2c3dc3dc23:eventhub:tofugeariothub\~32766|streamanalytic,
-Timestamp:11/1/2016 4:26:56 AM
-TrackingId:c72526651ba4472dbb3bdb9a7fc3821a\_G0, SystemTracker:gateway2,
-Timestamp:11/1/2016 4:26:56 AM
-
-2016-11-01T04:26:56.529 The supplied offset '336' is invalid. The last
-offset in the system is '-1'
-TrackingId:8c2c5345-efe2-4cf9-8952-d5ea4a62dd70\_B2,
-SystemTracker:iothub-ns-tofugeario-73126-2c3dc3dc23:eventhub:tofugeariothub\~24575,
-Timestamp:11/1/2016 4:26:56 AM
-Reference:c25ee6a8-f019-40b6-9f77-0e9b92e8d55d,
-TrackingId:25df2420-84d1-47e9-a0e3-f2a4beaee67c\_B2,
-SystemTracker:iothub-ns-tofugeario-73126-2c3dc3dc23:eventhub:tofugeariothub\~24575|streamanalytic,
-Timestamp:11/1/2016 4:26:56 AM
-TrackingId:c72526651ba4472dbb3bdb9a7fc3821a\_G0, SystemTracker:gateway2,
-Timestamp:11/1/2016 4:26:56 AM
-
-2016-11-01T04:26:58.051 The supplied offset '336' is invalid. The last
-offset in the system is '-1'
-TrackingId:ca247848-0a62-47cf-a90b-981441133ea1\_B2,
-SystemTracker:iothub-ns-tofugeario-73126-2c3dc3dc23:eventhub:tofugeariothub\~32766,
-Timestamp:11/1/2016 4:26:57 AM
-Reference:c26bec05-5155-4216-a1b9-ffe48706898e,
-TrackingId:51a95b09-e411-4281-a1e3-84a17fd024d9\_B2,
-SystemTracker:iothub-ns-tofugeario-73126-2c3dc3dc23:eventhub:tofugeariothub\~32766|streamanalytic,
-Timestamp:11/1/2016 4:26:58 AM
-TrackingId:c72526651ba4472dbb3bdb9a7fc3821a\_G0, SystemTracker:gateway2,
-Timestamp:11/1/2016 4:26:58 AM
-
-2016-11-01T04:26:58.051 The supplied offset '336' is invalid. The last
-offset in the system is '-1'
-TrackingId:8c2c5345-efe2-4cf9-8952-d5ea4a62dd70\_B2,
-SystemTracker:iothub-ns-tofugeario-73126-2c3dc3dc23:eventhub:tofugeariothub\~24575,
-Timestamp:11/1/2016 4:26:57 AM
-Reference:a49d0876-03a8-42c2-a031-65f4be9d004e,
-TrackingId:25df2420-84d1-47e9-a0e3-f2a4beaee67c\_B2,
-SystemTracker:iothub-ns-tofugeario-73126-2c3dc3dc23:eventhub:tofugeariothub\~24575|streamanalytic,
-Timestamp:11/1/2016 4:26:58 AM
-TrackingId:c72526651ba4472dbb3bdb9a7fc3821a\_G0, SystemTracker:gateway2,
-Timestamp:11/1/2016 4:26:58 AM
-
+:
+:
+:
 2016-11-01T04:26:59.230 Function completed (Success,
 Id=7a4e2e9d-5902-449c-ba4f-02c349994f0c)
 
-Performance tunning
+**Performance tunning**
 -------------------
 
 Basically, we’ve the end-to-end flow establish and next thing that we’re
@@ -266,7 +210,8 @@ Function environment may contribute this unexpected result which we’re
 working closely with product team to investaigate. Its important to get
 this performance issue resolve in order to productize in live network.
 
-**Conclusion**
+Conclusion
+----------
 
 This combined effort from Microsoft and Tofugear has delivered the POC
 that gave the partner a glance on how IoT Suite and Azure Function can
