@@ -82,7 +82,33 @@ authorization
 header](https://docs.microsoft.com/en-us/rest/api/iothub/device-identities-rest#bk_common)
 in order to connect to IoT Hub.
 
-![JavaScript SAS Token generation for IoTHub]({{ site.baseurl }}/images/TofugearImages/Tofugear-SASToken-generation.JPG)
+JavaScript sample in generating the SAS token:
+
+function xhrRequest(method, url, data) {
+    var hubName = "xxxxxxxxxxx";        
+    var myKey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+    var host = (hubName + ".azure-devices.net").toLowerCase()
+    var hostUrl = (host + "/" + url).toLowerCase()
+    var endpointUri = "https://" + hostUrl
+
+    // Create a SAS token
+    var expiry = 1500000000
+    var sigSource = encodeURIComponent(host) + '\n' + expiry
+    var signature, hmac;
+    hmachash = CryptoJS.HmacSHA256(sigSource, CryptoJS.enc.Base64.parse(myKey))
+    signature = CryptoJS.enc.Base64.stringify(hmachash)
+    var sasToken = _.template("SharedAccessSignature sig=<%= sig %>&se=<%= se %>&skn=<%= skn %>&sr=<%= sr %>")
+    var sas = sasToken({sr: encodeURIComponent(host), sig: encodeURIComponent(signature), se: expiry, skn: 'iothubowner'})
+ 
+    return jQuery.ajax({
+        url: endpointUri,
+        method: method,
+        data: JSON.stringify(data),
+        dataType: 'json',
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader("Authorization", sas);       
+        }
+    })   
 
 And when we test it on browser client, we found that [IoT hub does not
 support CORS](https://github.com/Azure/azure-iot-sdks/issues/1001) thus
