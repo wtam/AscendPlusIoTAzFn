@@ -306,6 +306,30 @@ unnecessary npm package load as long as the Functions are warm.
 
 ![Final Architecture and including a Timer Trigger AzFn to keep all AzFns warm]({{ site.baseurl }}/images/TofugearImages/Tofugear-FinalArch.jpg)
 
+And this is the Timer trigger code that ping other Azure Functions to keep them warm:
+
+    context.log("Timer triggered at " + myTimer.next);
+    var pingPaths = [
+        '/api/devices?action=ping&code=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        '/api/messages?action=ping&code=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+        '/api/message_feed?action=ping&code=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    ]
+    context.log("timer passed?",myTimer.isPastDue)
+    if(myTimer.isPastDue)
+    {
+        context.log('Node.js is running late!');     
+    } else {
+        pingPaths.map(function (path)  {
+            var url = `https://${process.env.AF_HOST}${path}`
+            context.log(`ping url: ${url}`)
+            var req = https.get(url)
+            req.end()
+        })
+        context.log("Timer triggered at " + myTimer.next);
+    };
+    context.done();
+
+
 We observed quite good respond time except the initial start of the
 Azure Function initially. Then we start noticed that there’s seems some
 long start up occasionally may up to mins and after some investigation
