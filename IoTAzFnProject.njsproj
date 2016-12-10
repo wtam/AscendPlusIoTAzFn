@@ -16,6 +16,21 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
+    <Content Include="2016-12-10-TofugearIotAzFn.md" />
+    <Content Include="Images\TofugearImages\Tofugear-AzFnDeviceRegistry.JPG" />
+    <Content Include="Images\TofugearImages\Tofugear-AzFnMessageFeed.JPG" />
+    <Content Include="Images\TofugearImages\Tofugear-AzFnMessageProxy.JPG" />
+    <Content Include="Images\TofugearImages\Tofugear-FinalArch.jpg" />
+    <Content Include="Images\TofugearImages\tofugear-logo.JPG" />
+    <Content Include="Images\TofugearImages\Tofugear-Postmaster-noCROS.JPG" />
+    <Content Include="Images\TofugearImages\Tofugear-SASToken-generation.JPG" />
+    <Content Include="Images\TofugearImages\Tofugear-StreamAnalytic.JPG" />
+    <Content Include="Images\TofugearImages\Tofugear-StreamAnalyticQuery.JPG" />
+    <Content Include="Images\TofugearImages\Tofugear-team.JPG" />
+    <Content Include="Images\TofugearImages\Tofugear-WebClientCORS.jpg" />
+    <Content Include="Images\TofugearImages\Tofugear-WhiteBoard.jpg" />
+    <Content Include="Images\TofugearImages\Tofugear-withRubyWorkerProxyArch.jpg" />
+    <Content Include="Images\TofugearImages\Tofugear-withWebClientProxyAzFnArch.jpg" />
     <Content Include="README.md" />
     <Content Include="devices\function.json" />
     <Compile Include="devices\index.js" />
@@ -29,6 +44,8 @@
   <ItemGroup>
     <Folder Include="devices" />
     <Folder Include="dummy_timer" />
+    <Folder Include="Images\" />
+    <Folder Include="Images\TofugearImages\" />
     <Folder Include="message_feed" />
     <Folder Include="messages" />
     <Folder Include="typings\" />
