@@ -39,9 +39,9 @@ This is the team that was involved with the project:
 -   William Dam – Microsoft, Technical Evangelist
 -   William Yeung – Tofugear Chief Architect
 
-Problem statement
+**Problem statement**
 
-**Scenario**
+Scenario
 --------
 Currently **Tofugear Omnitech** solution will collect both end customer
 analytic and transactional information from mobiles (Android, iOS) and
@@ -70,9 +70,9 @@ IoT hub instead of the PostgreSQL.
 
 ![Whiteboard Architecture]({{ site.baseurl }}/images/TofugearImages/Tofugear-WhiteBoard.jpg)
 
-Solutions, steps and delivery
+**Solutions, steps and delivery**
 
-**Data Ingestion**
+Data Ingestion
 --------------
 
 To unify all web and Mobile client connection to IoT hub, we decide to
@@ -115,11 +115,72 @@ postmaster minic the input with 1 use case
 
 ![Architecture to include AzFn to overcome CORS issue for WebClient]({{ site.baseurl }}/images/TofugearImages/Tofugear-withWebClientProxyAzFnArch.jpg)
 
-![Azure Function - IoTHub Device Registration Proxy partial sample code]({{ site.baseurl }}/images/TofugearImages/Tofugear-AzFnDeviceRegistry.JPG)
+This following Azure Function code is used for IoTHub Device Registration for all clients:
 
-![Azure Function - IoTHub webClient message Proxy partial sample code]({{ site.baseurl }}/images/TofugearImages/Tofugear-AzFnMessageProxy.JPG)
+    var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};SharedAccessKeyName=iothubowner;SharedAccessKey=${process.env.IOTHUBOWNER_SHAREDACCESSKEY}`
+    var registry = iothub.Registry.fromConnectionString(connectionString)
+    // var device = new iothub.device(null) //remove this code as its seems the new npm package keep complain that .device is not constructor
+    // replace with the following 
+    var device = {
+        deviceId: null
+    };
+    device.deviceId = req.body.deviceId
+    registry.create(device, function (err, deviceInfo, res) {
+        context.log('IoTHub connected......');
+        if (err) {
+            registry.get(device.deviceId, function(err, deviceInfo, res) { 
+                context.res = {
+                    status: 500,
+                    body: JSON.stringify({
+                        "status": 500,
+                        "error": 'unable to create device',
+                        "deviceInfo": deviceInfo 
+                    })
+                }              
+                context.done()          
+            });                     
+        } else if (deviceInfo) {
+            context.res = {
+                status: 201,
+                body: JSON.stringify({ "deviceInfo": deviceInfo })
+            }
+            context.log('Device registered......');
+            context.done();
+        }
+    })
 
-**Data Processing**
+This is the IoTHub webClient message Proxy Azure Function code to help web client to bypass the CORS issue:
+
+    var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};DeviceId=${req.body.deviceId};SharedAccessKey=${req.body.deviceKey}`  
+    var client = clientFromConnectionString(connectionString);
+    var messageSent = false;
+    var connectCallback = function (err) {
+      if (err) {
+        context.log('Could not connect: ' + err);
+      } else {
+        context.log('IotHub connected');
+        // Create a message and send it to the IoT Hub
+        var msg = new Message(JSON.stringify({ deviceId: req.body.deviceId, Data: req.body.deviceMessage }));
+        context.log('Message sending.....');
+        client.sendEvent(msg, function (err) {
+          if (err) {
+            console.log(err.toString());
+          } else {
+            context.log('Message sent');
+            messageSent = true;
+            context.res = {
+                  status: 201,
+                  body: JSON.stringify({Data: req.body.deviceMessage + ' from ' + req.body.deviceId + ' sent successfully'})
+              }
+              context.done();
+          };
+        });
+      }
+    };
+    client.open(connectCallback);
+
+
+Data Processing
 ---------------
 
 We then connect these Azure Functions to IoTHub with Stream Analytic and
@@ -155,7 +216,55 @@ to Ruby worker as its won’t able to handle the capacity.
 
 ![Architecture to add another AzFn to allow Ruby worker to pull from IoTHub]({{ site.baseurl }}/images/TofugearImages/Tofugear-withRubyWorkerProxyArch.jpg)
 
-![Azure Function – partial sample code to pull the message from IoTHub]({{ site.baseurl }}/images/TofugearImages/Tofugear-AzFnMessageProxy.JPG)
+This is the Azure Function code to allow Ruby worker to pull the message from IoTHub:
+
+    var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};SharedAccessKeyName=iothubowner;SharedAccessKey=${process.env.IOTHUBOWNER_SHAREDACCESSKEY}`
+    var printError = function (err) {
+    context.log(`error occurred: ${err.message}`);
+    };
+    var messageList = []
+    var messageBodyList = []
+    var appendMessageToList = function (message) {
+        messageBodyList.push({
+            offset: message.offset,
+            sequenceNumber: message.sequenceNumber,
+            enqueuedTimeUtc: message.enqueuedTimeUtc,
+            body: message.body
+        })
+        messageList.push(message)
+        context.log(message)
+        return true;
+    }
+    var client = EventHubClient.fromConnectionString(connectionString);
+    var closeClientAndCompleteContext = function() {
+        client.close();
+        context.done();
+    }
+    client.open()
+        .then(client.getPartitionIds.bind(client))
+        .then(function (partitionIds) {
+            context.log('Connected to IoTHub.....');
+            setTimeout(function() {
+                        context.res = {
+                            status: 201,
+                            body: JSON.stringify({'messages': messageBodyList})
+                        }
+                        
+                        closeClientAndCompleteContext()
+                
+                    }, 5000)
+                    
+            return partitionIds.map(function (partitionId) {
+                context.log('Retirving Data from queue.....');
+                return client.createReceiver(process.env.MESSAGE_POLL_CONSUMERGROUP, partitionId, { 'startAfterOffset': (req.query.after_offset || 0) }).then(function(receiver) {
+                    context.log(`connected. PartitionId: ${partitionId}`)                
+                    receiver.on('errorReceived', printError);
+                    receiver.on('message', appendMessageToList);
+                    
+                });
+            });
+        })
+        .catch(printError);
 
 We observed couple of unexpected behavior with the IoTHub on receiver
 side. This 1^st^ unexpected issue is we found the free version of IoT
@@ -180,14 +289,11 @@ TrackingId:25df2420-84d1-47e9-a0e3-f2a4beaee67c\_B2,
 SystemTracker:iothub-ns-tofugeario-73126-2c3dc3dc23:eventhub:tofugeariothub\~24575|streamanalytic,
 Timestamp:11/1/2016 4:26:55 AM
 TrackingId:c72526651ba4472dbb3bdb9a7fc3821a\_G0, SystemTracker:gateway2,
-Timestamp:11/1/2016 4:26:55 AM
-:
-:
-:
+Timestamp:11/1/2016 4:26:55 AM.............................
 2016-11-01T04:26:59.230 Function completed (Success,
 Id=7a4e2e9d-5902-449c-ba4f-02c349994f0c)
 
-**Performance tunning**
+Performance tunning
 -------------------
 
 Basically, we’ve the end-to-end flow establish and next thing that we’re
