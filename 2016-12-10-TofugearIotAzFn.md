@@ -84,7 +84,6 @@ in order to connect to IoT Hub.
 
 JavaScript sample in generating the SAS token:
 
-function xhrRequest(method, url, data) {
     var hubName = "xxxxxxxxxxx";        
     var myKey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx";
     var host = (hubName + ".azure-devices.net").toLowerCase()
