@@ -1,7 +1,6 @@
 ---
 layout: post
-title: "Improve the Customer Analytic with scalability and dashboard
-experience for Omnitech Retail Platform"
+title: "Improve the Customer Analytic with scalability and dashboard experience for Omnitech Retail Platform"  
 author: "William Dam"
 author-link: "#"
 #author-image: "{{ site.baseurl }}/images/authors/photo.jpg"
