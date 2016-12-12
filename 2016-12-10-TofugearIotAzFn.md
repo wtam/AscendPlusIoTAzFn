@@ -131,7 +131,7 @@ Sample of the data ingestion from WebClient
     "deviceId" : "webClient101",
     "deviceMessage" : {
         "event": "browse_product",
-        "event_value": "https://shop.theatreproducts.co.jp/ja/shop/products/162-spangle-bag?color=379",
+        "event_value": "https://shop.xxxxxxxxxx.co.xx/ja/shop/products/162-spangle-bag?color=379",
         "size_name": "FREE",
         "color_name": "BLACK",
         "product_id": 162,
