@@ -69,11 +69,10 @@ IoT hub instead of the PostgreSQL.
 
 Key technologies:
 
-- Azure IoT Hub
-- Azure Function
-- Azure Stream Analytics
-- Azure Blob
-- Power BI
+- IoT: Azure IoTHub, Azure Stream Analytic, Blob
+- Web Service: WebApp, Azure Function, Postman, Nodejs, Ruby, JS
+- Device: Mobile (iOS/Android)
+- Dashboard: PowerBI
 
 ![Whiteboard Architecture]({{site.baseurl}}/images/TofugearImages/Tofugear-WhiteBoard.jpg)
 
