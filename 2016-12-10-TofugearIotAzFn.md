@@ -37,10 +37,11 @@ This is the team that was involved with the project:
 -   William Dam – Microsoft, Technical Evangelist
 -   William Yeung – Tofugear Chief Architect
 
-**Problem statement**
+Problem statement:
+--------------------
 
-Scenario
---------
+**Scenario**
+
 Currently **Tofugear Omnitech** solution will collect both end customer
 analytic and transactional information from mobiles (Android, iOS) and
 web (client side JS) clients thru an API gateway built using Ruby & Rail
@@ -68,10 +69,10 @@ IoT hub instead of the PostgreSQL.
 
 ![Whiteboard Architecture]({{ site.baseurl }}/images/TofugearImages/Tofugear-WhiteBoard.jpg)
 
-**Solutions, steps and delivery**
+Solutions, steps and delivery
+-------------------------------
 
-Data Ingestion
---------------
+**Data Ingestion**
 
 To unify all web and Mobile client connection to IoT hub, we decide to
 use HTTP REST interface and we’ve spent sometime to figure out how to use JavaScript
@@ -192,8 +193,7 @@ This is the IoTHub webClient message Proxy Azure Function code to help web clien
     client.open(connectCallback);
 
 
-Data Processing
----------------
+**Data Processing**
 
 We then connect these Azure Functions to IoTHub with Stream Analytic and
 also using blob storage that store the reference data product snapshot
