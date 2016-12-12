@@ -16,7 +16,7 @@ function processRequest(context, req) {
 
     device.deviceId = req.body.deviceId
     registry.create(device, function (err, deviceInfo, res) {
-        context.log('IoTHub connected......')
+        context.log('IoTHub connected......registering: ', device.deviceId)
         if (err) {
             registry.get(device.deviceId, function (err, deviceInfo, res) { 
                 context.res = {
