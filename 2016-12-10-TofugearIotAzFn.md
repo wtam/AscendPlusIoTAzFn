@@ -17,8 +17,6 @@ Customer profile
 ----------------
 
 Company: Tofugear
------------------
-URL : <http://www.tofugear.com/> 
 ---------------------------------
 Location: Hong Kong
 -------------------
@@ -31,7 +29,7 @@ customized omnichannel retailing platform which offers new and exciting
 opportunities ranging from capturing increased sales across channels,
 enhanced brand awareness and loyalty, as well as gaining keen insight
 into customer 'trying and buying' behavior. They see the opportunity to
-adopt IoT Hub, ASA, Azure function and PowerBI on the omnitech retail
+adopt IoT Hub, Azure Stream Analytic, Azure function and PowerBI on the omnitech retail
 platform to offload current API gateway and deliver better dashboard
 viewing to their clients
 
@@ -45,8 +43,8 @@ Scenario
 --------
 Currently **Tofugear Omnitech** solution will collect both end customer
 analytic and transactional information from mobiles (Android, iOS) and
-web (client side JS) clients thru an API gateway built on Ruby & Rail
-then store into PostgreSQL. Then another Ruby worker will pull these
+web (client side JS) clients thru an API gateway built using Ruby & Rail
+then store into PostgreSQL. And another Ruby worker will pull these
 data from PostgreSQL to process regularly and load to Azure Machine
 Learning to build an item recommendation model for the products.
 Tofugear would like to further improve the scalability of existing
@@ -76,11 +74,9 @@ Data Ingestion
 --------------
 
 To unify all web and Mobile client connection to IoT hub, we decide to
-use HTTPS and we’ve spent sometime to figure out how to use JavaScript
+use HTTP REST interface and we’ve spent sometime to figure out how to use JavaScript
 to generate the SAS token which then need to set in the [HTTP
-authorization
-header](https://docs.microsoft.com/en-us/rest/api/iothub/device-identities-rest#bk_common)
-in order to connect to IoT Hub.
+authorization header](https://docs.microsoft.com/en-us/rest/api/iothub/device-identities-rest#bk_common) in order to connect to IoT Hub.
 
 JavaScript sample in generating the SAS token:
 
@@ -127,7 +123,7 @@ message proxy will be used by the web client only till IoTHub can
 support CORS later. iOS and Android will use the same HTTPS to send the
 device message directly to IoTHub as we test it work on Postman.
 
-William Yeung help of the detail webclient input deatail…usepostmaster minic the input with 1 use case.......
+#William Yeung help of the detail webclient input deatail…usepostmaster minic the input with 1 use case.......
 
 ![Architecture to include AzFn to overcome CORS issue]({{ site.baseurl }}/images/TofugearImages/Tofugear-withWebClientProxyAzFnArch.jpg)
 
@@ -204,9 +200,9 @@ also using blob storage that store the reference data product snapshot
 for Steam Analytic to combine these product data with the client analytic
 data for richer PowerBI output.
 
-![Stream Analytic]({{ site.baseurl }}/images/TofugearImages/Tofugear-StreamAnalytic.JPG)
+![Stream Analytic]({{ site.baseurl }}/images/TofugearImages/Tofugear-StreamAnalytic.jpg)
 
-Need William Yeung help to fine tune the data process with 1 use case scenario.
+#Need William Yeung help to fine tune the data process with 1 use case scenario.
 
 ![Stream Analytic - combing the client data and product and output to PowerBI]({{ site.baseurl }}/images/TofugearImages/Tofugear-StreamAnalyticQuery.jpg)
 
