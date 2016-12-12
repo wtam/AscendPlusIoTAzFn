@@ -113,19 +113,11 @@ And when we test it on browser client, we found that [IoT hub does not
 support CORS](https://github.com/Azure/azure-iot-sdks/issues/1001) thus
 return “not allowed access” error below from IoT Hub.
 
-*jquery-3.1.1.min.js:4 OPTIONS
-<https://tofugeariothub.azure-devices.net/devices/webClient> send @
-jquery-3.1.1.min.js:4ajax @ jquery-3.1.1.min.js:4xhrRequest @
-test.js:32sendTemperature @ test.js:11onclick @ test.html:11*
+*jquery-3.1.1.min.js:4 OPTIONS <https://tofugeariothub.azure-devices.net/devices/webClient> send @ jquery-3.1.1.min.js:4ajax @ jquery-3.1.1.min.js:4xhrRequest @ test.js:32sendTemperature @ test.js:11onclick @ test.html:11*
 
-*test.html:1 XMLHttpRequest cannot load
-<https://tofugeariothub.azure-devices.net/devices/webClient>. Response
-to preflight request doesn't pass access control check: No
-'Access-Control-Allow-Origin' header is present on the requested
-resource. Origin '<http://localhost:3001>' is therefore not allowed
-access. The response had HTTP status code 405.*
+*test.html:1 XMLHttpRequest cannot load <https://tofugeariothub.azure-devices.net/devices/webClient>. Response to preflight request doesn't pass access control check: No Access-Control-Allow-Origin' header is present on the requested resource. Origin '<http://localhost:3001>' is therefore not allowed access. The response had HTTP status code 405.*
 
-![CORS issue if directly connecting IoTHub from WebClient]({{ site.baseurl }}/images/TofugearImages/Tofugear-WebClientCORS.jpg)
+![IOTHub CORS with WebClient]({{ site.baseurl }}/images/TofugearImages/Tofugear-WebClientCORS.jpg)
 
 So we look into alternative with Azure function to act as the proxy. We
 create 2 Azure Functions as proxy responsible for device registration
@@ -136,9 +128,9 @@ support CORS later. iOS and Android will use the same HTTPS to send the
 device message directly to IoTHub as we test it work on Postman.
 
 William Yeung help of the detail webclient input deatail…..use
-postmaster minic the input with 1 use case
+postmaster minic the input with 1 use case.......
 
-![Architecture to include AzFn to overcome CORS issue for WebClient]({{ site.baseurl }}/images/TofugearImages/Tofugear-withWebClientProxyAzFnArch.jpg)
+![Architecture to include AzFn to overcome CORS issue]({{ site.baseurl }}/images/TofugearImages/Tofugear-withWebClientProxyAzFnArch.jpg)
 
 This following Azure Function code is used for IoTHub Device Registration for all clients:
 
@@ -210,8 +202,8 @@ Data Processing
 
 We then connect these Azure Functions to IoTHub with Stream Analytic and
 also using blob storage that store the reference data product snapshot
-for Steam Analytic to combine the product data with the client analytic
-data for richer PowerBI output
+for Steam Analytic to combine these product data with the client analytic
+data for richer PowerBI output.
 
 ![Stream Analytic]({{ site.baseurl }}/images/TofugearImages/Tofugear-StreamAnalytic.JPG)
 
