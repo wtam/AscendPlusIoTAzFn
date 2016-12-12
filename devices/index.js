@@ -1,13 +1,13 @@
 var iothub = require('azure-iothub')
 
 function processRequest(context, req) {
-    context.log('Node.js HTTP trigger function processed a request DeviceID=%s', req.body.deviceId);
+    context.log('Node.js HTTP trigger function processed a request DeviceID=%s', req.body.deviceId)
         
     var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};SharedAccessKeyName=iothubowner;SharedAccessKey=${process.env.IOTHUBOWNER_SHAREDACCESSKEY}`
 
-    context.log('Before registry to IoTHub.....');
+    context.log('Before registry to IoTHub.....')
     var registry = iothub.Registry.fromConnectionString(connectionString)
-    context.log('Connecting to IoTHub.....');
+    context.log('Connecting to IoTHub.....')
     // var device = new iothub.device(null) //remove this code as its seems the new npm package keep complain that .device is not constructor
     // replace with the following 
     var device = {
@@ -16,7 +16,7 @@ function processRequest(context, req) {
 
     device.deviceId = req.body.deviceId
     registry.create(device, function (err, deviceInfo, res) {
-        //context.log('IoTHub connected......');
+        context.log('IoTHub connected......')
         if (err) {
             registry.get(device.deviceId, function (err, deviceInfo, res) { 
                 context.res = {
@@ -41,7 +41,7 @@ function processRequest(context, req) {
 }
 
 function routeRequest(context, req) {
-    context.log('Node.js HTTP trigger function processed a request. RequestUri=%s', req.originalUrl);
+    context.log('Node.js HTTP trigger function processed a request. RequestUri=%s', req.originalUrl)
 
     if (req.query.action == 'ping')
     {
