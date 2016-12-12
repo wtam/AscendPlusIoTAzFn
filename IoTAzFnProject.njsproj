@@ -17,6 +17,7 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <ItemGroup>
     <Content Include="2016-12-10-TofugearIotAzFn.md" />
+    <Content Include="images\TofugearImages\Tofugear-AzFnDeviceRegistry.jpg" />
     <Content Include="images\TofugearImages\Tofugear-AzFnMessageFeed.JPG" />
     <Content Include="images\TofugearImages\Tofugear-AzFnMessageProxy.JPG" />
     <Content Include="images\TofugearImages\Tofugear-FinalArch.jpg" />
@@ -44,6 +45,7 @@
     <Folder Include="devices" />
     <Folder Include="dummy_timer" />
     <Folder Include="images\" />
+    <Folder Include="images\TofugearImages\" />
     <Folder Include="message_feed" />
     <Folder Include="messages" />
     <Folder Include="typings\" />
