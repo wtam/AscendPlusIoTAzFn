@@ -122,10 +122,24 @@ create 2 Azure Functions as proxy responsible for device registration
 and decide to apply for all client (web and mobile) registration so that
 we won’t expose the IoTHub SAS token for device creation to the client side, and the send
 message proxy will be used by the web client only till IoTHub can
-support CORS later. iOS and Android will use the same HTTPS to send the
+support CORS later. iOS and Android will use the same REST interface to send the
 device message directly to IoTHub as we test it work on Postman.
 
-#William Yeung help of the detail webclient input deatail…usepostmaster minic the input with 1 use case.......
+Sample of the data ingestion from WebClient
+```
+{
+    "deviceId" : "webClient101",
+    "deviceMessage" : {
+        "event": "browse_product",
+        "event_value": "https://shop.theatreproducts.co.jp/ja/shop/products/162-spangle-bag?color=379",
+        "size_name": "FREE",
+        "color_name": "BLACK",
+        "product_id": 162,
+        "referer_product_id": null
+    },
+    "deviceKey": "gtNQ6rNF7m+rurHHh27w+i3D6NSEdCgUvfSVJnOnKys="
+ }
+```
 
 ![Architecture to include AzFn to overcome CORS issue]({{ site.baseurl }}/images/TofugearImages/Tofugear-withWebClientProxyAzFnArch.jpg)
 
@@ -203,10 +217,25 @@ data for richer PowerBI output.
 
 ![Stream Analytic]({{ site.baseurl }}/images/TofugearImages/Tofugear-StreamAnalytic.jpg)
 
-#Need William Yeung help to fine tune the data process with 1 use case scenario.
-
-![Stream Analytic - combing the client data and product and output to PowerBI]({{ site.baseurl }}/images/TofugearImages/Tofugear-StreamAnalyticQuery.jpg)
-
+Sample of Stream Analytic combing the client data and product and output to PowerBI
+```
+SELECT
+    skus.id as sku_id,
+    metrics.Data.event,
+    metrics.Data.event_value,
+    metrics.Data.size_name,
+    metrics.Data.color_name,
+    metrics.Data.user_id,
+    skus.price, 
+    skus.product_state,	
+    skus.product_code,
+    skus.can_purchase
+INTO
+    Tofugearpowerbidataset
+FROM
+    [TofugearIoTHubInput] metrics 
+LEFT JOIN [Tofugear-Ref-Data] skus on metrics.Data.product_id = skus.product_id
+```
 
 Since we like to separate the IoTHub consumer group for Azure Stream
 Analytic and Ruby worker. We create 2 consumer groups with one consumed
@@ -291,6 +320,7 @@ function call will return invalid respond in below screenshot for those
 partitions that doesn’t contain the specific offset. However, the call
 still return successfully just the error prompt is a bit annoying.
 
+```
 2016-11-01T04:26:55.136 The supplied offset '336' is invalid. The last
 offset in the system is '-1'
 TrackingId:8c2c5345-efe2-4cf9-8952-d5ea4a62dd70\_B2,
@@ -304,6 +334,7 @@ TrackingId:c72526651ba4472dbb3bdb9a7fc3821a\_G0, SystemTracker:gateway2,
 Timestamp:11/1/2016 4:26:55 AM.............................
 2016-11-01T04:26:59.230 Function completed (Success,
 Id=7a4e2e9d-5902-449c-ba4f-02c349994f0c)
+```
 
 Performance tunning
 -------------------
