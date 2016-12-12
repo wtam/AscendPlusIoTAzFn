@@ -7,7 +7,7 @@ author-link: "#"
 date: 2016-12-10
 categories: [IoT & App Services]
 color: "blue"
-#image: "{{ site.baseurl }}/images/TofugearImages/ tofugear-logo.JPG" #should be ~350px tall
+#image: "{{ site.baseurl }}/images/TofugearImages/ tofugear-logo.jpg" #should be ~350px tall
 excerpt: Microsoft work with Tofugear to re-architect its OmnitechRetail plaform solution
 language: English
 verticals: “Retail, Consumer Products & Services”
@@ -127,8 +127,7 @@ message proxy will be used by the web client only till IoTHub can
 support CORS later. iOS and Android will use the same HTTPS to send the
 device message directly to IoTHub as we test it work on Postman.
 
-William Yeung help of the detail webclient input deatail…..use
-postmaster minic the input with 1 use case.......
+William Yeung help of the detail webclient input deatail…usepostmaster minic the input with 1 use case.......
 
 ![Architecture to include AzFn to overcome CORS issue]({{ site.baseurl }}/images/TofugearImages/Tofugear-withWebClientProxyAzFnArch.jpg)
 
@@ -207,10 +206,9 @@ data for richer PowerBI output.
 
 ![Stream Analytic]({{ site.baseurl }}/images/TofugearImages/Tofugear-StreamAnalytic.JPG)
 
-Need William Yeung help to fine tune the data process with 1 use case
-scenario
+Need William Yeung help to fine tune the data process with 1 use case scenario.
 
-![Stream Analytic - combing the client data and product and output to PowerBI]({{ site.baseurl }}/images/TofugearImages/Tofugear-StreamAnalyticQuery.JPG)
+![Stream Analytic - combing the client data and product and output to PowerBI]({{ site.baseurl }}/images/TofugearImages/Tofugear-StreamAnalyticQuery.jpg)
 
 
 Since we like to separate the IoTHub consumer group for Azure Stream
@@ -284,8 +282,8 @@ This is the Azure Function code to allow Ruby worker to pull the message from Io
         .catch(printError);
 
 We observed couple of unexpected behavior with the IoTHub on receiver
-side. This 1^st^ unexpected issue is we found the free version of IoT
-hub does not support other than \$Default consumer group with error
+side. This 1st unexpected issue is that we found the free version of IoT
+hub does not support other than $Default consumer group with error
 message of the IoTHub could not be found but the paid IoTHub version is
 fine. I would recommend we document its if it’s a limitation.
 
@@ -377,7 +375,7 @@ frameworks and solutions solve the business or technical problem a
 customer has, we’re appreciated the resources and bandwidth the customer
 has to maintain, debug, or troubleshoot what we put together.
 
-![Tofugear team]({{ site.baseurl }}/images/TofugearImages/Tofugear-team.JPG)
+![Tofugear team]({{ site.baseurl }}/images/TofugearImages/Tofugear-team.jpg)
 
 Here is a quote from the customer:
 
