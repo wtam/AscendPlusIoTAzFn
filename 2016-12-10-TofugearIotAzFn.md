@@ -43,7 +43,7 @@ Problem statement:
 **Scenario**
 
 Currently **Tofugear Omnitech** solution will collect both end customer
-analytic and transactional information from mobiles (Android, iOS) and
+analytics and transactional information from mobiles (Android, iOS) and
 web (client side JS) clients thru an API gateway built using Ruby on Rails
 then store into PostgreSQL. Another Ruby worker will pull these
 data from PostgreSQL to process regularly and load to Azure Machine
@@ -69,7 +69,7 @@ IoT hub instead of the PostgreSQL.
 
 Key technologies:
 
-- IoT: Azure IoTHub, Azure Stream Analytic, Blob
+- IoT: Azure IoTHub, Azure Stream Analytics, Blob
 - Web Service: WebApp, Azure Function, Postman, Nodejs, Ruby, JS
 - Device: Mobile (iOS/Android)
 - Dashboard: PowerBI
@@ -81,7 +81,7 @@ Solutions, steps and delivery
 
 **Data Ingestion**
 
-To unify all web and Mobile client connection to IoT hub, we decide to
+To unify all web and mobile client connections to IoTHub, we decided to
 use HTTP REST interface and we’ve spent sometime to figure out how to use JavaScript
 to generate the SAS token which then need to set in the [HTTP
 authorization header](https://docs.microsoft.com/en-us/rest/api/iothub/device-identities-rest#bk_common) in order to connect to IoT Hub.
@@ -126,8 +126,8 @@ return “not allowed access” error below from IoT Hub.
 
 So we look into alternative with Azure function to act as the proxy. We
 create 2 Azure Functions as proxy responsible for device registration
-and decide to apply for all client (web and mobile) registration so that
-we won’t expose the IoTHub SAS token for device creation to the client side, and the send
+and decide to apply for all clients (web and mobile) registration so that
+we won’t expose the IoTHub SAS token for device creation on the client side, and the send
 message proxy will be used by the web client only till IoTHub can
 support CORS later. iOS and Android will use the same REST interface to send the
 device message directly to IoTHub as we test it work on Postman.
@@ -154,7 +154,7 @@ This following Azure Function code is used for IoTHub Device Registration for al
 
     var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};SharedAccessKeyName=iothubowner;SharedAccessKey=${process.env.IOTHUBOWNER_SHAREDACCESSKEY}`
     var registry = iothub.Registry.fromConnectionString(connectionString)
-    // var device = new iothub.device(null) //remove this code as its seems the new npm package keep complain that .device is not constructor
+    // var device = new iothub.device(null) //remove this code as its seems the new npm package keep complain that device is not constructor
     // replace with the following 
     var device = {
         deviceId: null
@@ -217,14 +217,13 @@ This is the IoTHub webClient message Proxy Azure Function code to help web clien
 
 **Data Processing**
 
-We then connect these Azure Functions to IoTHub with Stream Analytic and
+We then connect these Azure Functions to IoTHub with Stream Analytics and
 also using blob storage that store the reference data product snapshot
-for Steam Analytic to combine these product data with the client analytic
-data for richer PowerBI output.
+for Steam Analytic to combine for richer PowerBI output.
 
 ![Stream Analytic]({{site.baseurl}}/images/TofugearImages/Tofugear-StreamAnalytic.jpg)
 
-Sample of Stream Analytic combing the client data and product and output to PowerBI
+Sample of Stream Analytic combing the client data and product reference to output to PowerBI
 ```
 SELECT
     skus.id as sku_id,
@@ -245,8 +244,8 @@ LEFT JOIN [Tofugear-Ref-Data] skus on metrics.Data.product_id = skus.product_id
 ```
 
 Since we like to separate the IoTHub consumer group for Azure Stream
-Analytic and Ruby worker. We create 2 consumer groups with one consumed
-by Stream Analytic to output to PowerBI and another consumer group which
+Analytics and Ruby worker. We create 2 consumer groups with one consumed
+by Stream Analytics to output to PowerBI and another consumer group which
 will be used by the existing Ruby worker to pull the web and mobile
 client telemetry analytic data for processing.
 
@@ -343,7 +342,7 @@ Timestamp:11/1/2016 4:26:55 AM.............................
 Id=7a4e2e9d-5902-449c-ba4f-02c349994f0c)
 ```
 
-Performance tunning
+Performance tuning
 -------------------
 
 Basically, we’ve the end-to-end flow establish and next thing that we’re
@@ -386,7 +385,7 @@ long start up occasionally may up to mins and after some investigation
 we suspect some combination of the IoTHub connection setup and Azure
 Function environment may contribute this unexpected result which we’re
 working closely with product team to investaigate. Its important to get
-this performance issue resolve in order to productize in live network.
+this performance issue resolve in order to apply in production environment.
 
 Conclusion
 ----------
@@ -418,9 +417,8 @@ Here is a quote from the customer:
 bring us close relationship to work as partner. This new architecture
 significantly changes the way tracking end customer analytic data in
 communicate with a central system that receives and stores data, while
-also allowing to visualize these data in a meaningful way. It brings
+also allowing to visualize these close to real time data in a meaningful way. It brings
 performance and cost benefits and will definitively leverage our sales
 in this segment. This is what the market needs: solutions that add value
 while at the same time reducing the complexity of the integration to our
-platform would let us more focusing to deliver more customer value
-feature delivery.”
+platform would let us more focusing to deliver more customer value and feature delivery.”
