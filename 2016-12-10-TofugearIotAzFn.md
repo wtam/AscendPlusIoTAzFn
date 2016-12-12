@@ -44,10 +44,10 @@ Problem statement:
 
 Currently **Tofugear Omnitech** solution will collect both end customer
 analytic and transactional information from mobiles (Android, iOS) and
-web (client side JS) clients thru an API gateway built using Ruby & Rail
-then store into PostgreSQL. And another Ruby worker will pull these
+web (client side JS) clients thru an API gateway built using Ruby on Rails
+then store into PostgreSQL. Another Ruby worker will pull these
 data from PostgreSQL to process regularly and load to Azure Machine
-Learning to build an item recommendation model for the products.
+Learning to drive various AI functions for customer service and business intelligence analysis.
 Tofugear would like to further improve the scalability of existing
 architecture which limited by the API gateway and like to create a
 dashboard solution based on PowerBI for better insight of the customer
@@ -57,14 +57,14 @@ In our 1st meeting, we discussed the solution architecture, and we think
 it’s better to offload all the end customer analytic information
 (mobiles and web client) from the API gateway and only keeping the
 transactional data flow to the gateway. We’ll stream all the customer
-analytic and the store sensor data in next phase (RFID reader) to the
-IoT Hub instead, then use Azure Stream Analytic to aggerate all these
+analytics and the store sensors data (in next phase) to the
+IoT Hub instead, then use Azure Stream Analytics to aggerate all these
 real-time streaming data and join with the Product Reference data from
 Blob (snapshot from the PostgreSQL) to output to the Power BI.
 
 To minimize the code change of the Ruby worker which processing the end
 customer analytic data from PostgreSQL written from existing API
-Gateway. We’ll need to allow the Ruby worker to get the client data from
+Gateway. We’ll need to allow the Ruby worker to pull the client data from
 IoT hub instead of the PostgreSQL.
 
 ![Whiteboard Architecture]({{ site.baseurl }}/images/TofugearImages/Tofugear-WhiteBoard.jpg)
@@ -109,17 +109,18 @@ JavaScript sample in generating the SAS token:
 And when we test it on browser client, we found that [IoT hub does not
 support CORS](https://github.com/Azure/azure-iot-sdks/issues/1001) thus
 return “not allowed access” error below from IoT Hub.
-
+```
 *jquery-3.1.1.min.js:4 OPTIONS <https://tofugeariothub.azure-devices.net/devices/webClient> send @ jquery-3.1.1.min.js:4ajax @ jquery-3.1.1.min.js:4xhrRequest @ test.js:32sendTemperature @ test.js:11onclick @ test.html:11*
 
 *test.html:1 XMLHttpRequest cannot load <https://tofugeariothub.azure-devices.net/devices/webClient>. Response to preflight request doesn't pass access control check: No Access-Control-Allow-Origin' header is present on the requested resource. Origin '<http://localhost:3001>' is therefore not allowed access. The response had HTTP status code 405.*
+```
 
 ![IOTHub CORS with WebClient]({{ site.baseurl }}/images/TofugearImages/Tofugear-WebClientCORS.jpg)
 
 So we look into alternative with Azure function to act as the proxy. We
 create 2 Azure Functions as proxy responsible for device registration
 and decide to apply for all client (web and mobile) registration so that
-we won’t expose the IoTHub SAS token to the client side, and the send
+we won’t expose the IoTHub SAS token for device creation to the client side, and the send
 message proxy will be used by the web client only till IoTHub can
 support CORS later. iOS and Android will use the same HTTPS to send the
 device message directly to IoTHub as we test it work on Postman.
