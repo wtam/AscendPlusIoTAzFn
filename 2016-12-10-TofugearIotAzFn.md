@@ -79,7 +79,7 @@ use HTTP REST interface and we’ve spent sometime to figure out how to use Java
 to generate the SAS token which then need to set in the [HTTP
 authorization header](https://docs.microsoft.com/en-us/rest/api/iothub/device-identities-rest#bk_common) in order to connect to IoT Hub.
 
-JavaScript sample in generating the SAS token:
+JavaScript sample in generating the SAS token for IoTHub registration
 
     var hubName = "xxxxxxxxxxx";        
     var myKey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxx";
