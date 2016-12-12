@@ -3,11 +3,11 @@ layout: post
 title: "Improve the Customer Analytic with scalability and dashboard experience for Omnitech Retail Platform"  
 author: "William Dam"
 author-link: "#"
-#author-image: "{{ site.baseurl }}/images/authors/photo.jpg"
+#author-image: "{{site.baseurl}}/images/authors/photo.jpg"
 date: 2016-12-10
 categories: [IoT & App Services]
 color: "blue"
-#image: "{{ site.baseurl }}/images/TofugearImages/ tofugear-logo.jpg" #should be ~350px tall
+#image: "{{site.baseurl}}/images/TofugearImages/ tofugear-logo.jpg" #should be ~350px tall
 excerpt: Microsoft work with Tofugear to re-architect its OmnitechRetail plaform solution
 language: English
 verticals: “Retail, Consumer Products & Services”
@@ -67,7 +67,15 @@ customer analytic data from PostgreSQL written from existing API
 Gateway. We’ll need to allow the Ruby worker to pull the client data from
 IoT hub instead of the PostgreSQL.
 
-![Whiteboard Architecture]({{ site.baseurl }}/images/TofugearImages/Tofugear-WhiteBoard.jpg)
+Key technologies:
+
+- Azure IoT Hub
+- Azure Function
+- Azure Stream Analytics
+- Azure Blob
+- Power BI
+
+![Whiteboard Architecture]({{site.baseurl}}/images/TofugearImages/Tofugear-WhiteBoard.jpg)
 
 Solutions, steps and delivery
 -------------------------------
@@ -141,7 +149,7 @@ Sample of the data ingestion from WebClient
  }
 ```
 
-![Architecture to include AzFn to overcome CORS issue]({{ site.baseurl }}/images/TofugearImages/Tofugear-withWebClientProxyAzFnArch.jpg)
+![Architecture to include AzFn to overcome CORS issue]({{site.baseurl}}/images/TofugearImages/Tofugear-withWebClientProxyAzFnArch.jpg)
 
 This following Azure Function code is used for IoTHub Device Registration for all clients:
 
@@ -215,7 +223,7 @@ also using blob storage that store the reference data product snapshot
 for Steam Analytic to combine these product data with the client analytic
 data for richer PowerBI output.
 
-![Stream Analytic]({{ site.baseurl }}/images/TofugearImages/Tofugear-StreamAnalytic.jpg)
+![Stream Analytic]({{site.baseurl}}/images/TofugearImages/Tofugear-StreamAnalytic.jpg)
 
 Sample of Stream Analytic combing the client data and product and output to PowerBI
 ```
@@ -255,7 +263,7 @@ demand using HTTP to pull the IoTHub (receiver side) end customer
 analytic data for processing instead of direct streaming the IotHub data
 to Ruby worker as its won’t able to handle the capacity.
 
-![Architecture to add another AzFn to allow Ruby worker to pull from IoTHub]({{ site.baseurl }}/images/TofugearImages/Tofugear-withRubyWorkerProxyArch.jpg)
+![Architecture to add another AzFn to allow Ruby worker to pull from IoTHub]({{site.baseurl}}/images/TofugearImages/Tofugear-withRubyWorkerProxyArch.jpg)
 
 This is the Azure Function code to allow Ruby worker to pull the message from IoTHub:
 
@@ -347,7 +355,7 @@ ping function to keep these 3 Azure Functions warm and also moving all
 the npm package loading outside the Function call will improve the
 unnecessary npm package load as long as the Functions are warm.
 
-![Final Architecture and including a Timer Trigger AzFn to keep all AzFns warm]({{ site.baseurl }}/images/TofugearImages/Tofugear-FinalArch.jpg)
+![Final Architecture and including a Timer Trigger AzFn to keep all AzFns warm]({{site.baseurl}}/images/TofugearImages/Tofugear-FinalArch.jpg)
 
 And this is the Timer trigger code that ping other Azure Functions to keep them warm:
 
@@ -403,7 +411,7 @@ frameworks and solutions solve the business or technical problem a
 customer has, we’re appreciated the resources and bandwidth the customer
 has to maintain, debug, or troubleshoot what we put together.
 
-![Tofugear team]({{ site.baseurl }}/images/TofugearImages/Tofugear-team.jpg)
+![Tofugear team]({{site.baseurl}}/images/TofugearImages/Tofugear-team.jpg)
 
 Here is a quote from the customer:
 
