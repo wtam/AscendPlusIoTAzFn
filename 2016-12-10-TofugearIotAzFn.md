@@ -1,4 +1,4 @@
----
+﻿---
 layout: post
 title: "Improve the Customer Analytic with scalability and dashboard experience for Omnitech Retail Platform"  
 author: "William Dam"
@@ -8,7 +8,7 @@ date: 2016-12-10
 categories: [IoT & App Services]
 color: "blue"
 #image: "{{site.baseurl}}/images/TofugearImages/ tofugear-logo.jpg" #should be ~350px tall
-excerpt: Microsoft work with Tofugear to re-architect its OmnitechRetail plaform solution
+excerpt: Microsoft work with Tofugear to re-architect its Omnitech Retail platform solution
 language: English
 verticals: “Retail, Consumer Products & Services”
 ---
@@ -82,7 +82,7 @@ Solutions, steps and delivery
 **Data Ingestion**
 
 To unify all web and mobile client connections to IoTHub, we decided to
-use HTTP REST interface and we’ve spent sometime to figure out how to use JavaScript
+use HTTP REST interface and we’ve spent some time to figure out how to use JavaScript
 to generate the SAS token which then need to set in the [HTTP
 authorization header](https://docs.microsoft.com/en-us/rest/api/iothub/device-identities-rest#bk_common) in order to connect to IoT Hub.
 
@@ -122,9 +122,9 @@ return “not allowed access” error below from IoT Hub.
 *test.html:1 XMLHttpRequest cannot load <https://tofugeariothub.azure-devices.net/devices/webClient>. Response to preflight request doesn't pass access control check: No Access-Control-Allow-Origin' header is present on the requested resource. Origin '<http://localhost:3001>' is therefore not allowed access. The response had HTTP status code 405.*
 ```
 
-![IOTHub CORS with WebClient]({{ site.baseurl }}/images/TofugearImages/Tofugear-WebClientCORS.jpg)
+![IoTHub CORS with WebClient]({{ site.baseurl }}/images/TofugearImages/Tofugear-WebClientCORS.jpg)
 
-So we look into alternative with Azure function to act as the proxy. We
+So, we look into alternative with Azure function to act as the proxy. We
 create 2 Azure Functions as proxy responsible for device registration
 and decide to apply for all clients (web and mobile) registration so that
 we won’t expose the IoTHub SAS token for device creation on the client side, and the send
@@ -219,9 +219,9 @@ This is the IoTHub webClient message Proxy Azure Function code to help web clien
 
 We then connect these Azure Functions to IoTHub with Stream Analytics and
 also using blob storage that store the reference data product snapshot
-for Steam Analytic to combine for richer PowerBI output.
+for Stream Analytics to combine for richer PowerBI output.
 
-![Stream Analytic]({{site.baseurl}}/images/TofugearImages/Tofugear-StreamAnalytic.jpg)
+![Stream Analytics]({{site.baseurl}}/images/TofugearImages/Tofugear-StreamAnalytic.jpg)
 
 Sample of Stream Analytic combing the client data and product reference to output to PowerBI
 ```
@@ -252,7 +252,7 @@ client telemetry analytic data for processing.
 We spend quite sometimes hacking the [Apache Qpid Proton
 package](http://qpid.apache.org/proton/index.html) as there’s no IoTHub
 SDK support for Ruby which require AMQP1.0. We’ve no success after few
-tries and its also take too much effort if we look into using Ruby
+tries and it’s also take too much effort if we consider using Ruby
 inline to wrap the [azure-iot-sdks
 C](https://github.com/Azure/azure-iot-sdks/tree/master/c) library. To
 bypass the amqps connection challenge for Ruby worker, we decide to
@@ -348,7 +348,7 @@ Performance tuning
 Basically, we’ve the end-to-end flow establish and next thing that we’re
 looking into is to improve the startup time for Azure Functions as its
 exhibit some sort of cold start symptoms and we use Dynamic plan for
-cost saving. So we decide to setup another Timer Trigger KeepAlive HTTP
+cost saving. So, we decide to setup another Timer Trigger KeepAlive HTTP
 ping function to keep these 3 Azure Functions warm and also moving all
 the npm package loading outside the Function call will improve the
 unnecessary npm package load as long as the Functions are warm.
@@ -384,8 +384,8 @@ Azure Function initially. Then we start noticed that there’s seems some
 long start up occasionally may up to mins and after some investigation
 we suspect some combination of the IoTHub connection setup and Azure
 Function environment may contribute this unexpected result which we’re
-working closely with product team to investaigate. Its important to get
-this performance issue resolve in order to apply in production environment.
+working closely with product team to investigate. It’s important to get
+this performance issue resolve to apply in production environment.
 
 Conclusion
 ----------
@@ -413,7 +413,7 @@ has to maintain, debug, or troubleshoot what we put together.
 
 Here is a quote from the customer:
 
-“Our partnership with Microsoft on this Tofuger Omnitech project has
+“Our partnership with Microsoft on this Tofugear Omnitech project has
 bring us close relationship to work as partner. This new architecture
 significantly changes the way tracking end customer analytic data in
 communicate with a central system that receives and stores data, while

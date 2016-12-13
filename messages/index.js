@@ -10,6 +10,13 @@ function processRequest(context, req) {
     var client = clientFromConnectionString(connectionString);
     context.log('Connecting to IoTHub.....');
 
+    //
+    context.log('this is a test of the console');
+    context.log('just before load of azure-storage');
+    var foo = require('azure-storage');
+    context.log('just after load of azure-storage');
+    //
+
     var messageSent = false;
 
     var connectCallback = function (err) {
