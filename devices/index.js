@@ -19,7 +19,7 @@ function processRequest(context, req) {
         context.log('IoTHub connected......registering: ', device.deviceId)
         if (err) {
             registry.get(device.deviceId, function (err, deviceInfo, res) { 
-                //context.log('Error Device registering!..', deviceInfo.deviceId, " : ", deviceInfo.authentication.SymmetricKey.primaryKey)
+                context.log('Error Device registering!..', JSON.stringify({ "deviceInfo": deviceInfo }) )
                 context.res = {
                     status: 500,
                     body: JSON.stringify({
@@ -35,7 +35,7 @@ function processRequest(context, req) {
                 status: 201,
                 body: JSON.stringify({ "deviceInfo": deviceInfo })
             }
-            //context.log('Device registered..', deviceInfo.deviceId, " : ", deviceInfo.authentication.SymmetricKey.primaryKey)
+            context.log('Device registered..', JSON.stringify({ "deviceInfo": deviceInfo }))
             context.done();
         }
     })
