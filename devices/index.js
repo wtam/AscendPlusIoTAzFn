@@ -8,11 +8,11 @@ function processRequest(context, req) {
     context.log('Before registry to IoTHub.....')
     var registry = iothub.Registry.fromConnectionString(connectionString)
     context.log('Connecting to IoTHub.....')
-    var device = new iothub.Device(null) //remove this code as its seems the new npm package keep complain that .device is not constructor
-    /* replace with the following 
+    //var device = new iothub.Device(null) //remove this code as its seems the new npm package keep complain that .device is not constructor
+    // replace with the following 
     var device = {
         deviceId: null
-    };*/
+    };
 
     device.deviceId = req.body.deviceId
     registry.create(device, function (err, deviceInfo, res) {
