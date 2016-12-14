@@ -5,13 +5,6 @@ function processRequest(context, req) {
         
     var connectionString = `HostName=${process.env.IOTHUB_HOSTNAME};SharedAccessKeyName=iothubowner;SharedAccessKey=${process.env.IOTHUBOWNER_SHAREDACCESSKEY}`
 
-    //
-    context.log('this is a test of the console');
-    context.log('just before load of azure-storage');
-    var foo = require('azure-storage');
-    context.log('just after load of azure-storage');
-    // 
-
     context.log('Before registry to IoTHub.....')
     var registry = iothub.Registry.fromConnectionString(connectionString)
     context.log('Connecting to IoTHub.....')
