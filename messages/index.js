@@ -29,7 +29,7 @@ function processRequest(context, req) {
             messageSent = true;
             context.res = {
                   status: 201,
-                  body: JSON.stringify({Data: req.body.deviceMessage + ' from ' + req.body.deviceId + ' sent successfully'})
+                  body: ("Data: ",  JSON.stringify(req.body.deviceMessage), ' from ', req.body.deviceId,  'sent successfully')
               }
               context.done();
           };
