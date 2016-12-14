@@ -8,17 +8,18 @@ function processRequest(context, req) {
     context.log('Before registry to IoTHub.....')
     var registry = iothub.Registry.fromConnectionString(connectionString)
     context.log('Connecting to IoTHub.....')
-    //var device = new iothub.device(null) //remove this code as its seems the new npm package keep complain that .device is not constructor
-    // replace with the following 
+    var device = new iothub.Device(null) //remove this code as its seems the new npm package keep complain that .device is not constructor
+    /* replace with the following 
     var device = {
         deviceId: null
-    };
+    };*/
 
     device.deviceId = req.body.deviceId
     registry.create(device, function (err, deviceInfo, res) {
         context.log('IoTHub connected......registering: ', device.deviceId)
         if (err) {
             registry.get(device.deviceId, function (err, deviceInfo, res) { 
+                context.log('Error Device registering!..', deviceInfo.deviceId, " : ", deviceInfo.authentication.SymmetricKey.primaryKey);
                 context.res = {
                     status: 500,
                     body: JSON.stringify({
@@ -34,7 +35,7 @@ function processRequest(context, req) {
                 status: 201,
                 body: JSON.stringify({ "deviceInfo": deviceInfo })
             }
-            context.log('Device registered......');
+            context.log('Device registered..', deviceInfo.deviceId, " : ", deviceInfo.authentication.SymmetricKey.primaryKey);
             context.done();
         }
     })
