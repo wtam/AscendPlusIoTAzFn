@@ -47,7 +47,7 @@ function processRequest(context, req) {
                     }, 5000)
                     
             return partitionIds.map(function (partitionId) {
-                context.log('Retirving Data from queue.....');
+                context.log('Retirving Data from queue...Consumer Group: ', process.env.MESSAGE_POLL_CONSUMERGROUP, 'startAfterOffset : ', req.query.after_offset)
                 return client.createReceiver(process.env.MESSAGE_POLL_CONSUMERGROUP, partitionId, { 'startAfterOffset': (req.query.after_offset || 0) }).then(function(receiver) {
                     context.log(`connected. PartitionId: ${partitionId}`)                
                     receiver.on('errorReceived', printError);
