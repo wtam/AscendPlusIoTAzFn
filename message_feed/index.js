@@ -23,7 +23,7 @@ function processRequest(context, req) {
         return true;
     }
 
-    context.log('Before registry to IoTHub.....');
+    context.log('Before registry to IoTHub.....Consumer Group: ', process.env.MESSAGE_POLL_CONSUMERGROUP)
     var client = EventHubClient.fromConnectionString(connectionString);
     context.log('Connecting to IoTHub.....');
 
@@ -35,19 +35,16 @@ function processRequest(context, req) {
     client.open()
         .then(client.getPartitionIds.bind(client))
         .then(function (partitionIds) {
-            context.log('Connected to IoTHub.....');
+            context.log('Connected to IoTHub.....')
             setTimeout(function() {
                         context.res = {
                             status: 201,
                             body: JSON.stringify({'messages': messageBodyList})
-                        }
-                        
-                        closeClientAndCompleteContext()
-                
-                    }, 5000)
-                    
+                        }                        
+                        closeClientAndCompleteContext()               
+                    }, 5000)                
             return partitionIds.map(function (partitionId) {
-                context.log('Retirving Data from queue...Consumer Group: ', process.env.MESSAGE_POLL_CONSUMERGROUP, 'startAfterOffset : ', req.query.after_offset)
+                //context.log('Retirving Data from queue...Consumer Group: ', process.env.MESSAGE_POLL_CONSUMERGROUP, 'startAfterOffset : ', req.query.after_offset)
                 return client.createReceiver(process.env.MESSAGE_POLL_CONSUMERGROUP, partitionId, { 'startAfterOffset': (req.query.after_offset || 0) }).then(function(receiver) {
                     context.log(`connected. PartitionId: ${partitionId}`)                
                     receiver.on('errorReceived', printError);
