@@ -70,7 +70,7 @@ IoT hub instead of the PostgreSQL.
 Key technologies:
 
 - IoT: Azure IoTHub, Azure Stream Analytics, Blob
-- Web Service: WebApp, Azure Function, Postman, Nodejs, Ruby, JS
+- Web Service: WebApp, Azure Function, Nodejs, Ruby, JS
 - Device: Mobile (iOS/Android)
 - Dashboard: PowerBI
 
