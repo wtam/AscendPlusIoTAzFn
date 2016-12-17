@@ -380,7 +380,7 @@ And this is the Timer trigger code that ping other Azure Functions to keep them 
 
 
 We observed quite good respond time with average like 400ms or sometime less except the initial start of the
-Azure Function initially. Then we start noticed that there’s seems some
+Azure Function. Then we start noticed that there’s seems some
 long start up occasionally may up to mins and after some investigation
 we suspect some combination of the IoTHub connection setup and Azure
 Function environment may contribute this unexpected result which we’re
