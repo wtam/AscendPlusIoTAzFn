@@ -379,7 +379,7 @@ And this is the Timer trigger code that ping other Azure Functions to keep them 
     context.done();
 
 
-We observed quite good respond time except the initial start of the
+We observed quite good respond time with average like 400ms or sometime less except the initial start of the
 Azure Function initially. Then we start noticed that there’s seems some
 long start up occasionally may up to mins and after some investigation
 we suspect some combination of the IoTHub connection setup and Azure
@@ -387,7 +387,7 @@ Function environment may contribute this unexpected result which we’re
 working closely with product team to investigate. It’s important to get
 this performance issue resolve to apply in production environment.
 
-![If removing the error cases, the average respond time for the message proxy are general take less than 400ms]({{site.baseurl}}/images/TofugearImages/AzFnPerformance.jpg)
+![Respond time for the message proxy with remvoing the error cases]({{site.baseurl}}/images/TofugearImages/AzFnPerformance.jpg)
 
 Conclusion
 ----------
