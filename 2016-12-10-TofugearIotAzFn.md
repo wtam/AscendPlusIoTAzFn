@@ -387,6 +387,8 @@ Function environment may contribute this unexpected result which we’re
 working closely with product team to investigate. It’s important to get
 this performance issue resolve to apply in production environment.
 
+![If removing the error cases, the average respond time for the message proxy are general take less than 400ms]({{site.baseurl}}/images/TofugearImages/AzFnPerformance.jpg)
+
 Conclusion
 ----------
 
